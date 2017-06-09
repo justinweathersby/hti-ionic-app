@@ -1,0 +1,45 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Home</ion-title>
+  </ion-navbar> -->
+  <div class="header-section">
+    <div class="logo-wrapper">
+      <img src="assets/icon/logo.png" />
+    </div>
+  </div>
+</ion-header>
+
+<ion-content padding>
+  <!-- <button ion-button secondary menuToggle>Toggle Menu</button> -->
+  <!-- <ion-list>
+    <ion-item *ngFor="let item of items">{{item.title}}</ion-item>
+  </ion-list> -->
+
+  <div class="collection-container">
+    <div class="collection-item" *ngFor="let item of items">
+        <img src="assets/icon/bg-mask.png" />
+        <div>{{item}}</div>
+    </div>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div class="space"></div>
+    <div class="bottom-bar animated bounceInUp">
+      <ion-row>
+        <ion-col>
+          <button ion-button clear full><div>Employee</div><div>Portal</div></button>
+        </ion-col>
+        <ion-col>
+          <button ion-button clear full><div>Job</div><div>Openings</div></button>
+        </ion-col>
+      </ion-row>
+      <button ion-button class="phone-btn"></button>
+    </div>
+  </ion-toolbar>
+</ion-footer>
