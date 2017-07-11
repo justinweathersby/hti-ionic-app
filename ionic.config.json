@@ -1,5 +1,11 @@
 {
   "name": "myApp",
   "app_id": "80c526f3",
-  "type": "ionic-angular"
+  "type": "ionic-angular",
+  "proxies": [
+    {
+        "path": "/api",
+        "proxyUrl": "https://human-tech-employment-staging.herokuapp.com/api"
+    }
+  ]
 }

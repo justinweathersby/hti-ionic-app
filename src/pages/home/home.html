@@ -9,6 +9,7 @@
     <div class="logo-wrapper">
       <img src="assets/icon/logo.png" />
     </div>
+    <button ion-button clear class="signout-btn" (click)="signout()">SignOut</button>
   </div>
 </ion-header>
 
@@ -17,9 +18,8 @@
   <!-- <ion-list>
     <ion-item *ngFor="let item of items">{{item.title}}</ion-item>
   </ion-list> -->
-
   <div class="collection-container">
-    <div class="collection-item" *ngFor="let item of items">
+    <div class="collection-item" *ngFor="let item of items" (click)="navigateTo(item)">
         <img src="assets/icon/bg-mask.png" />
         <div>{{item}}</div>
     </div>
@@ -33,13 +33,13 @@
     <div class="bottom-bar animated bounceInUp">
       <ion-row>
         <ion-col>
-          <button ion-button clear full><div>Employee</div><div>Portal</div></button>
+          <button ion-button clear full (click)="employee()"><div>Employee</div><div>Portal</div></button>
         </ion-col>
         <ion-col>
-          <button ion-button clear full><div>Job</div><div>Openings</div></button>
+          <button ion-button clear full (click)="job()"><div>Job</div><div>Openings</div></button>
         </ion-col>
       </ion-row>
-      <button ion-button class="phone-btn"></button>
+      <button ion-button class="phone-btn" (click)="phone()"></button>
     </div>
   </ion-toolbar>
 </ion-footer>

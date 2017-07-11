@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 
+import { ApiServiceProvider } from '../../providers/api-service/api-service';
 /**
  * Generated class for the ResetPasswordPage page.
  *
@@ -13,7 +14,17 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class ResetPasswordPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  resetForms: any;
+  err: any;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              public alertCtrl: AlertController, public loading: LoadingController,
+              public apiServiceProvider: ApiServiceProvider) {
+    this.resetForms = {
+      email: '',
+      redirect_url: '/'
+    }
+    this.err = [];
   }
 
   ionViewDidLoad() {
@@ -21,11 +32,53 @@ export class ResetPasswordPage {
   }
 
   continue() {
+    this.err = [];
+    if (this.resetForms.email == '' )
+      this.err.push('Email can\'t be blank');
+    if (this.err.length != 0) {
+      this.alertErrorMessage();
+      return;
+    }
 
+    let loader = this.loading.create({
+      content: '',
+    });
+    loader.present();
+
+    this.apiServiceProvider.resetPassword(this.resetForms).then(response => {
+      loader.dismiss();
+      this.navCtrl.pop();
+    }, err => {
+      this.err = [];
+      this.err.push(err);
+      this.alertErrorMessage();
+      loader.dismiss();
+    });
   }
 
   back() {
     this.navCtrl.pop();
+  }
+
+  alertErrorMessage() {
+    let errorMessage = '';
+    this.err.forEach(item => {
+      errorMessage += item + '\n';
+    })
+
+    let confirm = this.alertCtrl.create({
+      title: 'Error',
+      message: errorMessage,
+      buttons: [
+        {
+          text: 'Confirm',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 
 }

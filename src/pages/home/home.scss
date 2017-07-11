@@ -12,6 +12,16 @@ page-home {
     .logo-wrapper {
       padding: 40px 80px 10px 80px;
     }
+
+    .signout-btn {
+      position: absolute;
+      z-index: 99999;
+      color: white;
+      top: 6px;
+      right: 6px;
+      color: white;
+      font-size: 1.2rem;
+    }
   }
 
   .content {

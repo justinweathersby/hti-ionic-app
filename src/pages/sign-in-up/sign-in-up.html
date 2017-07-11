@@ -28,25 +28,32 @@
     <div class="body-section">
       <ion-list>
 
-        <ion-item>
+        <!-- <ion-item>
           <ion-icon item-start>
             <img src="assets/icon/ic-username.png" />
           </ion-icon>
-          <ion-input type="text" placeholder="Username" color="light"></ion-input>
-        </ion-item>
+          <ion-input type="text" placeholder="Username" color="light" [(ngModel)]="signForm.username"></ion-input>
+        </ion-item> -->
 
-        <ion-item *ngIf="isSignUp">
+        <ion-item>
           <ion-icon item-start>
             <img src="assets/icon/ic-email.png" />
           </ion-icon>
-          <ion-input type="email" placeholder="Email"></ion-input>
+          <ion-input type="email" placeholder="Email" [(ngModel)]="signForm.email"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-icon item-start>
             <img src="assets/icon/ic-password.png" />
           </ion-icon>
-          <ion-input type="password" placeholder="Password"></ion-input>
+          <ion-input type="password" placeholder="Password" [(ngModel)]="signForm.password"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="isSignUp">
+          <ion-icon item-start>
+            <img src="assets/icon/ic-password.png" />
+          </ion-icon>
+          <ion-input type="password" placeholder="Confirm Password" [(ngModel)]="signForm.confirmpassword"></ion-input>
         </ion-item>
 
         <!-- <ion-item *ngIf="isSignUp">
@@ -60,7 +67,10 @@
     </div>
     <div class="footer-section">
       <button ion-button full color="green" class="continue-btn" (click)="continue()">Continue</button>
-      <button ion-button full clear color="white" class="terms-btn" (click)="termsAndConditions()">Terms & Conditions</button>
+      <button ion-button full clear color="white" class="terms-btn" (click)="bottomBtnClick()">
+        <span *ngIf="isSignUp">Terms & Conditions</span>
+        <span *ngIf="!isSignUp">Forgot Password?</span>
+      </button>
     </div>
 
 </ion-content>

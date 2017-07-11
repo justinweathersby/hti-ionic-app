@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ModalController, AlertController, LoadingController } from 'ionic-angular';
+
+import { ApiServiceProvider } from '../../providers/api-service/api-service';
+import { GlobalServiceProvider } from '../../providers/global-service/global-service';
+
 import { ResetPasswordPage } from '../reset-password/reset-password';
 import { HomePage } from '../home/home';
 /**
@@ -15,15 +19,24 @@ import { HomePage } from '../home/home';
 export class SignInUpPage {
 
   isSignUp: boolean;
-
+  signForm: any;
+  err: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController,
-              public alertCtrl: AlertController, public loading: LoadingController) {
+              public alertCtrl: AlertController, public loading: LoadingController,
+              public apiServiceProvider: ApiServiceProvider, public globalServiceProvider: GlobalServiceProvider) {
+    this.isSignUp = false;
+    this.signForm = {
+      username: '',
+      email: '',
+      password: ''
+    }
+    this.err = [];
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SignInUpPage');
-    this.isSignUp = false;
+
   }
 
   switchSignInUp(isSignUp) {
@@ -31,15 +44,115 @@ export class SignInUpPage {
   }
 
   continue() {
-    this.navCtrl.push(HomePage);
+    if (this.isSignUp) {
+      this.signup();
+    } else {
+      this.signin();
+    }
+    //this.navCtrl.push(HomePage);
+  }
+
+  bottomBtnClick() {
+    if(this.isSignUp) {
+      this.termsAndConditions();
+    } else {
+      this.navigateToResetPassword();
+    }
   }
 
   termsAndConditions() {
+
+  }
+
+  navigateToResetPassword() {
     let resetPassWordPage = this.modalCtrl.create(ResetPasswordPage);
     resetPassWordPage.onDidDismiss(data => {
 
     });
     resetPassWordPage.present();
+  }
+
+  signin() {
+    this.err = [];
+    if (this.signForm.email == '' )
+      this.err.push('Email can\'t be blank');
+    if (this.signForm.password == '')
+      this.err.push('Password can\'t be blank');
+    if (this.err.length != 0) {
+      this.alertErrorMessage();
+      return;
+    }
+
+    let loader = this.loading.create({
+      content: '',
+    });
+    loader.present();
+
+    this.apiServiceProvider.signin(this.signForm).then(response => {
+      this.globalServiceProvider.userData = response;
+      loader.dismiss();
+      this.navCtrl.push(HomePage);
+    }, err => {
+      this.err = [];
+      this.err.push(err);
+      this.alertErrorMessage();
+      loader.dismiss();
+    });
+  }
+
+  signup() {
+    this.err = [];
+    // if (this.signForm.username == '' )
+    //   this.err.push('Username can\'t be blank');
+    if (this.signForm.email == '')
+      this.err.push('Email can\'t be blank');
+    if (this.signForm.password == '')
+      this.err.push('Password can\'t be blank');
+    if (this.signForm.confirmpassword == '')
+        this.err.push('Confirm Password can\'t be blank');
+    if (this.signForm.password != this.signForm.confirmpassword)
+          this.err.push('Confirm Password and Password should be equal');
+    if (this.err.length != 0) {
+      this.alertErrorMessage();
+      return;
+    }
+
+    let loader = this.loading.create({
+      content: '',
+    });
+    loader.present();
+
+    this.apiServiceProvider.signup(this.signForm).then(response => {
+      this.globalServiceProvider.userData = response;
+      loader.dismiss();
+      this.navCtrl.push(HomePage);
+    }, err => {
+      this.err = [];
+      this.err.push(err);
+      this.alertErrorMessage();
+      loader.dismiss();
+    });
+  }
+
+  alertErrorMessage() {
+    let errorMessage = '';
+    this.err.forEach(item => {
+      errorMessage += item + '\n';
+    })
+
+    let confirm = this.alertCtrl.create({
+      title: 'Error',
+      message: errorMessage,
+      buttons: [
+        {
+          text: 'Confirm',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 
 }
