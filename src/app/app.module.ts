@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpModule } from '@angular/http';
+import { Push } from '@ionic-native/push';
 
 import { MyApp } from './app.component';
 import { SignInUpPage } from '../pages/sign-in-up/sign-in-up';
@@ -40,6 +41,7 @@ import { GlobalServiceProvider } from '../providers/global-service/global-servic
     StatusBar,
     SplashScreen,
     InAppBrowser,
+    Push,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ApiServiceProvider,
     GlobalServiceProvider
