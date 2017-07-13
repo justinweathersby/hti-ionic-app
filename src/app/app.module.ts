@@ -3,6 +3,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpModule } from '@angular/http';
 import { Push } from '@ionic-native/push';
+import { NativeStorage } from '@ionic-native/native-storage';
 
 import { MyApp } from './app.component';
 import { SignInUpPage } from '../pages/sign-in-up/sign-in-up';
@@ -41,6 +42,7 @@ import { GlobalServiceProvider } from '../providers/global-service/global-servic
     StatusBar,
     SplashScreen,
     InAppBrowser,
+    NativeStorage,
     Push,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ApiServiceProvider,

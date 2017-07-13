@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ModalController, AlertController, LoadingController } from 'ionic-angular';
 
+import { NativeStorage } from '@ionic-native/native-storage';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 import { GlobalServiceProvider } from '../../providers/global-service/global-service';
 
@@ -23,7 +24,7 @@ export class SignInUpPage {
   err: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController,
-              public alertCtrl: AlertController, public loading: LoadingController,
+              public alertCtrl: AlertController, public loading: LoadingController, public nativeStorage: NativeStorage,
               public apiServiceProvider: ApiServiceProvider, public globalServiceProvider: GlobalServiceProvider) {
     this.isSignUp = false;
     this.signForm = {
@@ -91,6 +92,12 @@ export class SignInUpPage {
     this.apiServiceProvider.signin(this.signForm).then(response => {
       this.globalServiceProvider.userData = response;
       loader.dismiss();
+      this.nativeStorage.setItem('hti', {userData: response}) .then(() => {
+        console.log('Stored item!, ', response);
+      }, error =>  {
+        console.error('Error storing item', error);
+      });
+
       this.navCtrl.push(HomePage);
     }, err => {
       this.err = [];
@@ -125,6 +132,11 @@ export class SignInUpPage {
     this.apiServiceProvider.signup(this.signForm).then(response => {
       this.globalServiceProvider.userData = response;
       loader.dismiss();
+      this.nativeStorage.setItem('hti', {userData: response}) .then(() => {
+        console.log('Stored item!, ', response);
+      }, error =>  {
+        console.error('Error storing item', error);
+      });
       this.navCtrl.push(HomePage);
     }, err => {
       this.err = [];

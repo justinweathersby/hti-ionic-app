@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, AlertController, LoadingController } from 'ionic-angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
+import { NativeStorage } from '@ionic-native/native-storage';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
 
 import { SignInUpPage } from '../sign-in-up/sign-in-up';
@@ -15,8 +16,8 @@ export class HomePage {
   items: any;
   err: any;
 
-  constructor(public navCtrl: NavController, public iab: InAppBrowser,
-              public alertCtrl: AlertController, public loading: LoadingController,
+  constructor(public navCtrl: NavController, public iab: InAppBrowser, public alertCtrl: AlertController,
+              public loading: LoadingController, public nativeStorage: NativeStorage,
               public apiServiceProvider: ApiServiceProvider) {
     this.items = [
       'Home',
@@ -81,6 +82,11 @@ export class HomePage {
     // }
     this.apiServiceProvider.signout().then(response => {
       loader.dismiss();
+      this.nativeStorage.setItem('hti', null) .then(() => {
+        console.log('Stored item!')
+      }, error =>  {
+        console.error('Error storing item', error);
+      });
       this.navCtrl.setRoot(SignInUpPage);
     }, err => {
       this.err = [];
