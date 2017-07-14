@@ -28,7 +28,8 @@ export class ApiServiceProvider {
       var client = '';
       let requestData = {
         email: params.email,
-        password: params.password
+        password: params.password,
+        device_token: self.globalServiceProvider.deviceToken
       };
       let headers = new Headers({
         'Accept': 'application/json'
@@ -81,7 +82,9 @@ export class ApiServiceProvider {
       var client = '';
       let requestData = {
         email: params.email,
-        password: params.password
+        password: params.password,
+        password_confirmation: params.password,
+        device_token: self.globalServiceProvider.deviceToken
       };
       let headers = new Headers({
         'Accept': 'application/json',

@@ -12,10 +12,11 @@ import 'rxjs/add/operator/map';
 export class GlobalServiceProvider {
 
   userData: any;
-
+  deviceToken: string;
   constructor(public http: Http) {
     console.log('Hello GlobalServiceProvider Provider');
     this.userData = {};
+    this.deviceToken = '';
   }
 
 }

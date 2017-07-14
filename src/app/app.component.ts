@@ -77,6 +77,7 @@ export class MyApp {
     pushObject.on('registration').subscribe((data: any) => {
       console.log("device token -> " + data.registrationId);
       //TODO - send device token to server
+      this.globalServiceProvider.deviceToken = data.registrationId;
     });
 
     pushObject.on('notification').subscribe((data: any) => {
