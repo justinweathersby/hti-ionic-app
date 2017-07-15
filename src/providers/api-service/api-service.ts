@@ -195,15 +195,17 @@ export class ApiServiceProvider {
       self.http.post(Constants.SERVER_URL + '/api/auth/password', requestData, options)
       .map(res => res.json())
       .subscribe(response => {
-        console.log('success signup response : ', response);
+        console.log('success resetPassword response : ', response);
         if (response.success == true) {
           resolve(response.message);
         }
         else
-          reject('SignUp Failed. Please try again.');
+          reject('Reset Password Failed. Please try again.');
       }, err => {
-        if (err.success == false) {
-          resolve(err.errors[0]);
+        console.log('resetPassword err :', err);
+        let data = JSON.parse(err._body);
+        if (data.success == false) {
+          reject(data.errors[0]);
         }
         // console.log('signup failed: ', err);
         // let error = JSON.parse(err._body);
