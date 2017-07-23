@@ -22,7 +22,7 @@ export class ResetPasswordPage {
               public apiServiceProvider: ApiServiceProvider) {
     this.resetForms = {
       email: '',
-      redirect_url: '/'
+      redirect_url: '/home'
     }
     this.err = [];
   }
@@ -48,6 +48,7 @@ export class ResetPasswordPage {
     this.apiServiceProvider.resetPassword(this.resetForms).then(response => {
       loader.dismiss();
       this.navCtrl.pop();
+      this.alertMessage(response);
     }, err => {
       this.err = [];
       this.err.push(err);
@@ -69,6 +70,22 @@ export class ResetPasswordPage {
     let confirm = this.alertCtrl.create({
       title: 'Error',
       message: errorMessage,
+      buttons: [
+        {
+          text: 'Confirm',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+  alertMessage(msg) {
+    let confirm = this.alertCtrl.create({
+      title: 'Alert',
+      message: msg,
       buttons: [
         {
           text: 'Confirm',
