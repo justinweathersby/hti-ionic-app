@@ -38,26 +38,26 @@ export class HomePage {
       //navigateTo Employee Portal
       this.openWebView('https://htijobs.securedportals.com/portal/employee_login.aspx');
     } else if (item == this.items[2]) {
-      //navigateTo About
-      this.openWebView('https://www.htijobs.com/about');
-    } else if (item == this.items[3]) {
-      //navigateTo 'Job Fair
-      this.openWebView('https://www.htijobs.com/job-fairs');
-    } else if (item == this.items[4]) {
-      //navigateTo News
-      this.openWebView('https://www.htijobs.com/news');
-    } else if (item == this.items[5]) {
       //navigateTo Job Openings
       this.openWebView('https://www.htijobs.com/job-openings');
+    } else if (item == this.items[3]) {
+      //navigateTo About
+      this.openWebView('https://www.htijobs.com/about');
+    } else if (item == this.items[4]) {
+      //navigateTo 'Job Fair
+      this.openWebView('https://www.htijobs.com/job-fairs');
+    } else if (item == this.items[5]) {
+      //navigateTo News
+      this.openWebView('https://www.htijobs.com/news');
     }
   }
 
   contact() {
-    this.openWebView('https://www.htijobs.com/locations');
+    this.openWebView('https://www.htijobs.com/contact');
   }
 
   locations() {
-    this.openWebView('https://www.htijobs.com/contact');
+    this.openWebView('https://www.htijobs.com/locations');
   }
 
 
