@@ -21,11 +21,11 @@ export class HomePage {
               public apiServiceProvider: ApiServiceProvider) {
     this.items = [
       'Home',
-      'Location',
+      'Employee Portal',
+      'Job Openings',
       'About',
       'Job Fair',
-      'News',
-      'Contact',
+      'News'
     ];
     this.err = [];
   }
@@ -35,8 +35,8 @@ export class HomePage {
       //navigateTo Home
       this.openWebView('https://www.htijobs.com/');
     } else if (item == this.items[1]) {
-      //navigateTo Location
-      this.openWebView('https://www.htijobs.com/locations');
+      //navigateTo Employee Portal
+      this.openWebView('https://htijobs.securedportals.com/portal/employee_login.aspx');
     } else if (item == this.items[2]) {
       //navigateTo About
       this.openWebView('https://www.htijobs.com/about');
@@ -47,22 +47,19 @@ export class HomePage {
       //navigateTo News
       this.openWebView('https://www.htijobs.com/news');
     } else if (item == this.items[5]) {
-      //navigateTo Contact
-      this.openWebView('https://www.htijobs.com/contact');
+      //navigateTo Job Openings
+      this.openWebView('https://www.htijobs.com/job-openings');
     }
   }
 
-  employee() {
-    this.openWebView('https://htijobs.securedportals.com/portal/employee_login.aspx');
+  contact() {
+    this.openWebView('https://www.htijobs.com/locations');
   }
 
-  job() {
-    this.openWebView('https://www.htijobs.com/job-openings');
+  locations() {
+    this.openWebView('https://www.htijobs.com/contact');
   }
 
-  phone() {
-    //this.openWebView('');
-  }
 
   openWebView(url) {
     let options ='location=no,toolbar=yes,hardwareback=yes';
