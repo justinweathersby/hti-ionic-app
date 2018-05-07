@@ -63,6 +63,13 @@
           <ion-input type="text" placeholder="Profession"></ion-input>
         </ion-item> -->
 
+        <ion-item *ngIf="isSignUp">
+          <ion-label class="location-label">Locaton</ion-label>
+          <ion-select [(ngModel)]="signForm.location" multiple="false">
+            <ion-option *ngFor="let item of locationList">{{item}}</ion-option>
+          </ion-select>
+        </ion-item>
+
       </ion-list>
     </div>
     <div class="footer-section">

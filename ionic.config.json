@@ -4,8 +4,11 @@
   "type": "ionic-angular",
   "proxies": [
     {
-        "path": "/api",
-        "proxyUrl": "https://human-tech-employment-staging.herokuapp.com/api"
+      "path": "/api",
+      "proxyUrl": "https://human-tech-employment-staging.herokuapp.com/api"
     }
-  ]
+  ],
+  "integrations": {
+    "cordova": {}
+  }
 }

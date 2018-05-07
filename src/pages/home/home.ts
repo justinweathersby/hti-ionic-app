@@ -64,6 +64,13 @@ export class HomePage {
   openWebView(url) {
     let options ='location=no,toolbar=yes,hardwareback=yes';
     const browser = this.iab.create(url, '_blank', options);
+    const css = '.column-part strong a { margin-bottom: 10px !important; margin-right: 10px !important;}';
+    browser.on("loadstop").subscribe(() => {
+      browser.insertCSS({code: css});
+    },
+    err => {
+        console.log("InAppBrowser loadstart Event Error: " + err);
+    });
   }
 
   signout() {

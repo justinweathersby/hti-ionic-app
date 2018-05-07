@@ -3,6 +3,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpModule } from '@angular/http';
 import { Push } from '@ionic-native/push';
+import { OneSignal } from '@ionic-native/onesignal';
 import { NativeStorage } from '@ionic-native/native-storage';
 
 import { MyApp } from './app.component';
@@ -44,6 +45,7 @@ import { GlobalServiceProvider } from '../providers/global-service/global-servic
     InAppBrowser,
     NativeStorage,
     Push,
+    OneSignal,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ApiServiceProvider,
     GlobalServiceProvider

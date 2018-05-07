@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, AlertController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, AlertController, LoadingController, Platform } from 'ionic-angular';
 
 import { NativeStorage } from '@ionic-native/native-storage';
 import { ApiServiceProvider } from '../../providers/api-service/api-service';
@@ -22,15 +22,41 @@ export class SignInUpPage {
   isSignUp: boolean;
   signForm: any;
   err: any;
+  locationList: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController,
               public alertCtrl: AlertController, public loading: LoadingController, public nativeStorage: NativeStorage,
-              public apiServiceProvider: ApiServiceProvider, public globalServiceProvider: GlobalServiceProvider) {
+              public apiServiceProvider: ApiServiceProvider, public globalServiceProvider: GlobalServiceProvider,
+              public plt: Platform) {
     this.isSignUp = false;
+    this.locationList = [
+      'Anderson',
+      'Mauldin',
+      'Greenville',
+      'Seneca',
+      'Spartanburg',
+      'Lexington',
+      'Charleston',
+      'Charlotte',
+      'Asheville',
+      'Lincolnton',
+      'Oxford',
+      'Chattanooga',
+      'Fort Wayne',
+      'Ardmore'
+    ];
+    let type = '';
+    if (this.plt.is('ios')) {
+      type = 'ios';
+    } else if (this.plt.is('android')) {
+      type = 'android';
+    }
     this.signForm = {
       username: '',
       email: '',
-      password: ''
+      password: '',
+      type: type,
+      location: this.locationList[0],
     }
     this.err = [];
   }

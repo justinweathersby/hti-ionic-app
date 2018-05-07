@@ -5,7 +5,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { NativeStorage } from '@ionic-native/native-storage';
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
+import { OneSignal } from '@ionic-native/onesignal';
 import { GlobalServiceProvider } from '../providers/global-service/global-service';
+import * as Constants from '../providers/constants/constants';
 
 import { SignInUpPage } from '../pages/sign-in-up/sign-in-up';
 import { HomePage } from '../pages/home/home';
@@ -22,7 +24,7 @@ export class MyApp {
   pages: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
-              public alertCtrl: AlertController,  private push: Push,  public nativeStorage: NativeStorage,
+              public alertCtrl: AlertController, private oneSignal: OneSignal, public nativeStorage: NativeStorage,
               public globalServiceProvider: GlobalServiceProvider) {
     this.initializeApp();
 
@@ -61,54 +63,71 @@ export class MyApp {
       console.warn("Push notifications not initialized. Cordova is not available - Run in physical device");
       return;
     }
-    const options: PushOptions = {
-      android: {
-        senderID: "594014724457"
-      },
-      ios: {
-        alert: "true",
-        badge: false,
-        sound: "true"
-      },
-      windows: {}
-    };
-    const pushObject: PushObject = this.push.init(options);
 
-    pushObject.on('registration').subscribe((data: any) => {
-      console.log("device token -> " + data.registrationId);
-      //TODO - send device token to server
-      this.globalServiceProvider.deviceToken = data.registrationId;
+    this.oneSignal.startInit(Constants.APP_ID, Constants.GOOGLE_PROJECT_NUMBER);
+
+    this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+
+    this.oneSignal.handleNotificationReceived().subscribe(() => {
+    // do something when notification is received
     });
 
-    pushObject.on('notification').subscribe((data: any) => {
-      console.log('message', data.message);
-      //if user using app and push notification comes
-      if (data.additionalData.foreground) {
-        // if application open, show popup
-        let confirmAlert = this.alertCtrl.create({
-          title: 'New Notification',
-          message: data.message,
-          buttons: [{
-            text: 'Ignore',
-            role: 'cancel'
-          }, {
-            text: 'View',
-            handler: () => {
-              //TODO: Your logic here
-
-            }
-          }]
-        });
-        confirmAlert.present();
-      } else {
-        //if user NOT using app and push notification comes
-        //TODO: Your logic on click of push notification directly
-
-        console.log("Push notification clicked");
-      }
+    this.oneSignal.handleNotificationOpened().subscribe(() => {
+      // do something when a notification is opened
     });
 
-    pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
+    this.oneSignal.endInit();
+
+
+
+    // const options: PushOptions = {
+    //   android: {
+    //     senderID: "708876205103"
+    //   },
+    //   ios: {
+    //     alert: "true",
+    //     badge: false,
+    //     sound: "true"
+    //   },
+    //   windows: {}
+    // };
+    // const pushObject: PushObject = this.push.init(options);
+
+    // pushObject.on('registration').subscribe((data: any) => {
+    //   console.log("device token -> " + data.registrationId);
+    //   //TODO - send device token to server
+    //   this.globalServiceProvider.deviceToken = data.registrationId;
+    // });
+
+    // pushObject.on('notification').subscribe((data: any) => {
+    //   console.log('message', data.message);
+    //   //if user using app and push notification comes
+    //   if (data.additionalData.foreground) {
+    //     // if application open, show popup
+    //     let confirmAlert = this.alertCtrl.create({
+    //       title: 'New Notification',
+    //       message: data.message,
+    //       buttons: [{
+    //         text: 'Ignore',
+    //         role: 'cancel'
+    //       }, {
+    //         text: 'View',
+    //         handler: () => {
+    //           //TODO: Your logic here
+
+    //         }
+    //       }]
+    //     });
+    //     confirmAlert.present();
+    //   } else {
+    //     //if user NOT using app and push notification comes
+    //     //TODO: Your logic on click of push notification directly
+
+    //     console.log("Push notification clicked");
+    //   }
+    // });
+
+    // pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
   }
 
   openPage(page) {
